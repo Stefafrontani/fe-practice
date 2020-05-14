@@ -1,22 +1,20 @@
 import React from 'react';
 import './App.css';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Nav from './components/Nav';  
 
-const dependenciesInstalled : string[] = ['redux', 'react-redux', 'redux-thunk', 'typescript'];
+// Containers
+import Home from './containers/Home/';
+import About from './containers/About/';
+import CreateDoc from './containers/CreateDoc/';
 
-function App() {
-    let titleApp : string = 'Traffic Practice';
-    return (
-        <div className="App">
-            <h1>{titleApp}</h1>
-            <ul>
-                {
-                    dependenciesInstalled.map((dependency) => {
-                        return <li>{dependency}</li>
-                    })
-                }
-            </ul>
-        </div>
-    );
-}
+const App: React.FC = () => (
+    <Router>
+        <Nav />
+        <Route exact path="/" component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/crear-documento" component={CreateDoc} />
+    </Router>
+);
 
 export default App;

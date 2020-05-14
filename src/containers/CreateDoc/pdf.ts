@@ -20,7 +20,7 @@ const pdfDefinitions: PdfDefinitions = {
     }
 }
 
-function createPdf(pdfType = 'default') {
+function createPdf(pdfType: string = 'default') {
     return PdfMake.createPdf(pdfDefinitions[pdfType]);
 }
 

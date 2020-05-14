@@ -1,6 +1,7 @@
 import PdfMake from 'pdfmake/build/pdfmake';
 
-import { TDocumentDefinitions} from 'types'
+import { TDocumentDefinitions } from 'types';
+import { TCreatedPdf } from 'types';
 
 interface PdfDefinitions {
     [pdfDefinition: string]: TDocumentDefinitions
@@ -20,7 +21,7 @@ const pdfDefinitions: PdfDefinitions = {
     }
 }
 
-function createPdf(pdfType: string = 'default') {
+function createPdf(pdfType: string = 'default'): TCreatedPdf {
     return PdfMake.createPdf(pdfDefinitions[pdfType]);
 }
 

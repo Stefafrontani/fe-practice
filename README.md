@@ -1,3 +1,4 @@
+# Create React App Specific
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -42,3 +43,14 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+# Code Project Specific
+
+## Dependencies notes
+
+### pdfmake module
+The instructions to install pdfMake form its own web is weird: It recommends to install  pdfkMake like client-version **$ bower install pdfmake**
+The problem: when you try to install a dependency with bower, the console recommends to use yarn or other tech instead.
+When going to the pdfmke npm page, https://www.npmjs.com/package/pdfmake, the installation process recommends to clone the pdfMake, install its dependencies and build the project in order to get the bundles files (inside the build folder)
+Digging deeper, some repos were found and use the pdfmake as a normal dependency `https://github.com/vspedr/react-pdfmake-example`, listed in the `package.json` file as `{ dependencies: pdfkMake } `.
+This was the approach taken, so the command `$ npm install pdfmake` was run.

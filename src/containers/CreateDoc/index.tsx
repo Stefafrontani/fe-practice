@@ -1,7 +1,7 @@
 import React from 'react';
 import { createPdf } from './pdf';
 
-const CreateDoc = () => {
+const CreateDoc: React.FC = () => {
 
     function openPdf(): void {
         createPdf().open();

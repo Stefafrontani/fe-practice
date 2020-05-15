@@ -23,13 +23,14 @@ const renderOptions = (options: DropdownOption[]) => options.map((opt) => (
 ));
 
 const Dropdown: React.FC<DropdownProps> = (props) => {
+  
   const { className, name, options, title } = props;
-  const [value, setValue] = React.useState();
+  const [dropdownValue, setDropdownValue] = React.useState<string | number>();
   const classes = useStyles();
   const rootClass: string = classNames(classes.root, className);
 
   const handleChange = (event: React.ChangeEvent<{ value: any }>) => { 
-    setValue(event.target.value);
+    setDropdownValue(event.target.value);
   };
 
   return (
@@ -40,7 +41,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
           id={`select-${name}`}
           labelId={`select-${name}-label`}
           onChange={handleChange}
-          value={value}
+          value={dropdownValue}
         >
           {options && options.length && renderOptions(options)}
         </Select>

@@ -4,14 +4,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import classNames from 'classnames';
-import useStyles from './styles';
+import dropdownStyles from './styles';
 
-type DropdownOption = {
+interface DropdownOption {
   id: number,
   value: string
 }
 
-type DropdownProps = {
+interface DropdownProps {
   name: string,
   options: DropdownOption[],
   title: string,
@@ -23,10 +23,10 @@ const renderOptions = (options: DropdownOption[]) => options.map((opt) => (
 ));
 
 const Dropdown: React.FC<DropdownProps> = (props) => {
-  
+
   const { className, name, options, title } = props;
   const [dropdownValue, setDropdownValue] = React.useState<string | number>();
-  const classes = useStyles();
+  const classes = dropdownStyles();
   const rootClass: string = classNames(classes.root, className);
 
   const handleChange = (event: React.ChangeEvent<{ value: any }>) => { 

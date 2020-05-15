@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { Theme } from '@material-ui/core';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const dropdownStyles = makeStyles((theme: Theme) => ({
   root: {
     padding: theme.spacing(1),
   },
@@ -11,4 +11,4 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default useStyles;
+export default dropdownStyles;

@@ -1,6 +1,6 @@
 import React from 'react';
 import Dropdown from '../../components/Dropdown';
-import documentTypes from './documentTypes';
+import documentTypes from './config';
 import { createPdf } from './pdf';
 
 const CreateDoc: React.FC = () => {

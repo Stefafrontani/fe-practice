@@ -6,21 +6,38 @@ import Select from '@material-ui/core/Select';
 import classNames from 'classnames';
 import dropdownStyles from './styles';
 
-interface DropdownOption {
+interface OptionItem {
   id: number,
   value: string
 }
 
+interface OptionsListProps {
+  options: OptionItem[],
+}
+
 interface DropdownProps {
   name: string,
-  options: DropdownOption[],
+  options: OptionItem[],
   title: string,
   className?: string,
 }
 
-const renderOptions = (options: DropdownOption[]) => options.map((opt) => (
-  <MenuItem key={opt.id} value={opt.id}>{opt.value}</MenuItem>
-));
+const OptionsList: React.FC<OptionsListProps> = (props) => {
+  
+  const { options } = props;
+
+  if (options && options.length) {
+    return (
+      <div>
+        {options.map((opt) => (
+          <MenuItem key={opt.id} value={opt.id}>{opt.value}</MenuItem>
+        ))}
+      </div>
+    );
+  }
+
+  return null;
+}
 
 const Dropdown: React.FC<DropdownProps> = (props) => {
 
@@ -43,7 +60,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
           onChange={handleChange}
           value={dropdownValue}
         >
-          {options && options.length && renderOptions(options)}
+          <OptionsList options={options} />
         </Select>
       </FormControl>
     </div>

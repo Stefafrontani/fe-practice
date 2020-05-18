@@ -3,11 +3,9 @@ import PdfMake from 'pdfmake/build/pdfmake';
 import { TDocumentDefinitions } from 'types';
 import { TCreatedPdf } from 'types';
 
-interface PdfDefinitions {
-    [pdfDefinition: string]: TDocumentDefinitions
-}
+type PdfType = 'default' | 'sOne';
 
-const pdfDefinitions: PdfDefinitions = {
+const pdfDefinitions: Record<PdfType, TDocumentDefinitions> = {
     default : {
         content: 'Content',
         header: 'Header',
@@ -21,7 +19,7 @@ const pdfDefinitions: PdfDefinitions = {
     }
 }
 
-function createPdf(pdfType: string = 'default'): TCreatedPdf {
+function createPdf(pdfType: PdfType = 'default'): TCreatedPdf {
     return PdfMake.createPdf(pdfDefinitions[pdfType]);
 }
 

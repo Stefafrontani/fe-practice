@@ -16,7 +16,6 @@ const CreateDoc: React.FC = () => {
     return (
         <React.Fragment>
             <h1>CreateDoc Page</h1>
-            
             <Dropdown name="documentType" title="Document type" options={documentTypes} />
             <button onClick={openPdf}>See preview</button>
             <button onClick={downloadPdf}>Download PDF</button>

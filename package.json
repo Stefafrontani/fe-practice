@@ -27,7 +27,8 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "ts-node": "^8.10.1"
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -35,7 +36,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "ssr": "nodemon --exec babel-node server/index.js",
-    "ts-ssr": "ts-node --project server/tsconfig.json server/index.js"
+    "ts-ssr": "ts-node --project server/tsconfig.json server/index.js",
+    "build-ssr": "npm run build && npm run ts-ssr"
   },
   "eslintConfig": {
     "extends": "react-app"

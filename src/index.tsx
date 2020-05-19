@@ -6,12 +6,8 @@ import * as serviceWorker from './serviceWorker';
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
-  </React.StrictMode>,
+ReactDOM.hydrate(
+  <App />,
   document.getElementById('root')
 );
 

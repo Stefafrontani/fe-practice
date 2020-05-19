@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["*", "./src/@types/*"]
+    },
+    "outDir": "./dist",
+    "target": "es5",
+    "typeRoots": ["./src/@types", "./node_modules/@types"],
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noImplicitAny": false,
+    "moduleResolution": "node",
+    "strictNullChecks": false,
+    "jsx": "react",
+    "noEmit": true
+  },
+  "exclude": ["node_modules"]
+}

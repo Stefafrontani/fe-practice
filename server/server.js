@@ -12,9 +12,7 @@ const PORT = 8000;
 
 const app = express();
 
-app.use(express.static(path.resolve(__dirname, '..', 'build')));
-
-app.use('/*', (req, res, next) => {
+const handleMarkup = (req, res, next) => {
   fs.readFile(path.resolve('./build/index.html'), 'utf-8', (err, data) => {
     if (err) {
       console.log(err);
@@ -35,7 +33,13 @@ app.use('/*', (req, res, next) => {
       )
     );
   })
-});
+}
+
+app.use(/^\/$/, handleMarkup);
+
+app.use(express.static(path.resolve(__dirname, '..', 'build')));
+
+app.use(/(\/\w*)/, handleMarkup);
 
 app.listen(PORT, () => {
   console.log(`App launched on ${PORT}`);

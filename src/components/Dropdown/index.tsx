@@ -10,11 +10,15 @@ interface OptionItem {
   value: string
 }
 
+type DropdownValue = string | number | undefined;
+
 interface DropdownProps {
+  className?: string,
   name: string,
+  onChange: (event: React.ChangeEvent<{ value: any }>) => void,
   options: OptionItem[],
   title: string,
-  className?: string,
+  value: DropdownValue,
 }
 
 const createOptions = (opt: OptionItem) => (
@@ -25,14 +29,9 @@ const renderOptions = (options: OptionItem[]) => options.map(createOptions);
 
 const Dropdown: React.FC<DropdownProps> = (props) => {
 
-  const { className, name, options, title } = props;
-  const [dropdownValue, setDropdownValue] = React.useState<string | number>();
+  const { className, name, options, title, onChange, value} = props;
   const classes = dropdownStyles();
   const rootClass = classNames(classes.root, className);
-
-  const handleChange = (event: React.ChangeEvent<{ value: any }>) => { 
-    setDropdownValue(event.target.value);
-  };
 
   return (
     <div className={rootClass}>
@@ -42,8 +41,8 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
           id={`select-${name}`}
           labelId={`select-${name}-label`}
           native
-          onChange={handleChange}
-          value={dropdownValue}
+          onChange={onChange}
+          value={value}
         >
           <option aria-label="None" value="" />
           {renderOptions(options)}

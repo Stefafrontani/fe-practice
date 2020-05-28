@@ -11,9 +11,7 @@ import createDocStyles from "./styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 const CreateDoc: React.FC = () => {
-  const [docProcessInitialized, handleProcessInitialization] = useState<
-    Boolean
-  >(false);
+  const [docProcessInitialized, handleProcessInitialization] = useState<Boolean>(false);
 
   const classes = createDocStyles();
 

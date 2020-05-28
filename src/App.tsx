@@ -11,9 +11,11 @@ import CreateDoc from './containers/CreateDoc/';
 const App: React.FC = () => (
     <Router>
         <Nav />
-        <Route exact path="/" component={Home} />
-        <Route path="/about" component={About} />
-        <Route path="/crear-documento" component={CreateDoc} />
+        <main className="page_main">
+            <Route exact path="/" component={Home} />
+            <Route path="/about" component={About} />
+            <Route path="/crear-documento" component={CreateDoc} />
+        </main>
     </Router>
 );
 

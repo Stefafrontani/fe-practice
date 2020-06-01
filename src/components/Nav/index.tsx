@@ -5,17 +5,15 @@ import './nav.css';
 const Nav: React.FC = () => {
   return (
     <header>
-      <nav>
-        <ul className="nav">
-          <li className="nav__item nav__item--logo">
-            <Link to="/">
-              <picture>
-                <source media="" srcSet=""></source>
-                <source media="" srcSet=""></source>
-                <img alt="Logo in here" srcSet="" />
-              </picture>
-            </Link>
-          </li>
+      <nav className="nav">
+        <Link className="nav__logo" to="/">
+          <picture>
+            <source media="" srcSet=""></source>
+            <source media="" srcSet=""></source>
+            <img alt="Logo in here" srcSet="" />
+          </picture>
+        </Link>
+        <ul className="nav__list">
           <li className="nav__item">
             <Link to="/">Home</Link>
           </li>

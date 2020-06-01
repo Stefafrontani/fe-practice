@@ -1,4 +1,4 @@
-.page__content {
+.content {
   width: 100%;
   max-width: 1024px;
   margin: 0 auto;
@@ -8,46 +8,46 @@
 }
 
 /* LIST - Page content head */
-.page__content ul {
+.content ul {
   grid-column: 1 / 3;
   display: flex;
   justify-content: space-around;
 }
-.page__content ul li {
+.content ul li {
   padding: 20px 30px;
 }
 
 /* INFORMATION - Left aside */
-.page__content__information {
+.content__information {
   grid-row: 2 / 4;
 }
 
-.information__title {
+.content__information-title {
   text-align: center;
 }
-.information__explanation {
+.content__information-explanation {
   text-align: left;
 }
 
 /* INSTRUCTIONS - Right-Above section */
-.instructions {
+.content__instructions {
   text-align: center;
 }
 
 /* SHARED STYLES */
-.information__title,
-.instructions__title {
+.content__information-title,
+.content__instructions-title {
   padding: 10px 0px;
   font-weight: 500;
 }
 
-.page__content ul,
-.information__title,
-.instructions__title {
+.content ul,
+.content__information-title,
+.content__instructions-title {
   font-size: 22px;
 }
 
-.information__explanation,
-.instructions__explanation {
+.content__information-explanation,
+.content__instructions-explanation {
   font-size: 18px;
 }

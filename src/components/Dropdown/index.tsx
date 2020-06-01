@@ -4,13 +4,15 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import classNames from 'classnames';
 import dropdownStyles from './styles';
+import { CreateDocActions } from '../../actions/createDocActions';
 
 interface OptionItem {
-  id: number,
+  id: string,
   value: string
 }
 
 interface DropdownProps {
+  action: (docType: string) => CreateDocActions,
   name: string,
   options: OptionItem[],
   title: string,
@@ -25,13 +27,21 @@ const renderOptions = (options: OptionItem[]) => options.map(createOptions);
 
 const Dropdown: React.FC<DropdownProps> = (props) => {
 
-  const { className, name, options, title } = props;
+  const { action, className, name, options, title } = props;
   const [dropdownValue, setDropdownValue] = React.useState<string | number>();
   const classes = dropdownStyles();
   const rootClass = classNames(classes.root, className);
 
+  const getDocumentType = (id: string) => {
+    const type = options.filter(opt => opt.id === id);
+    if (!type || !type.length) return '';
+    return type[0].value;
+  }
+
   const handleChange = (event: React.ChangeEvent<{ value: any }>) => {
-    setDropdownValue(event.target.value);
+    const value = event.target.value;
+    setDropdownValue(value);
+    action(getDocumentType(value));
   };
 
   return (

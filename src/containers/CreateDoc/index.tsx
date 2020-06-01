@@ -1,15 +1,18 @@
 import React, { useState } from "react";
+import { connect, ConnectedProps } from 'react-redux';
+import VisibilityIcon from "@material-ui/icons/Visibility";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
 import GetAppIcon from "@material-ui/icons/GetApp";
-import VisibilityIcon from "@material-ui/icons/Visibility";
 import Dropdown from "../../components/Dropdown";
 import documentTypes from "./config";
 import { createPdf } from "./pdf";
+import { setDocType } from "../../actions/createDocActions";
+import { RootState } from "../../reducers/rootReducer";
 import createDocClasses from "./styles";
 import "./createDoc.css";
 
-const CreateDoc: React.FC = () => {
+const CreateDoc: React.FC<Props> = (props) => {
   const [docInitialized, setDocInitialization] = useState<Boolean>(false);
 
   const docClasses = createDocClasses();
@@ -81,10 +84,11 @@ const CreateDoc: React.FC = () => {
             >
               Cancelar Documento
               </Button>
-            <Dropdown
-              name="documentType"
-              title="Document type"
-              options={documentTypes}
+            <Dropdown 
+                action={props.setDocType} 
+                name="documentType" 
+                options={documentTypes} 
+                title="Document type" 
             />
             <Button
               onClick={openPdf}
@@ -118,4 +122,17 @@ const CreateDoc: React.FC = () => {
   );
 };
 
-export default CreateDoc;
+const mapDispatch = {
+    setDocType: (docType: string) => setDocType(docType)
+}
+
+const mapState = (state: RootState) => ({
+    docType: state.createDoc.documentType
+})
+
+const connector = connect(mapState, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+type Props = PropsFromRedux;
+
+export default connector(CreateDoc);

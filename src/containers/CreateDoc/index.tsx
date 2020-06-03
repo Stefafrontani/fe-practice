@@ -7,13 +7,13 @@ import "./createDoc.css";
 import Button from "@material-ui/core/Button";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import VisibilityIcon from "@material-ui/icons/Visibility";
-import createDocStyles from "./styles";
+import createDocClasses from "./styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 const CreateDoc: React.FC = () => {
   const [docInitialized, setDocInitialization] = useState<Boolean>(false);
 
-  const classes = createDocStyles();
+  const docClasses = createDocClasses();
 
   function openPdf(): void {
     createPdf().open();
@@ -90,7 +90,7 @@ const CreateDoc: React.FC = () => {
               onClick={openPdf}
               variant="contained"
               color="default"
-              classes={classes}
+              className={docClasses.button}
               startIcon={<VisibilityIcon />}
             >
               Ver archivo

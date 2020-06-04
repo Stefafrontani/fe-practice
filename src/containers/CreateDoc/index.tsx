@@ -1,14 +1,13 @@
 import React, { useState } from "react";
+import Button from "@material-ui/core/Button";
+import DeleteIcon from "@material-ui/icons/Delete";
+import GetAppIcon from "@material-ui/icons/GetApp";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 import Dropdown from "../../components/Dropdown";
 import documentTypes from "./config";
 import { createPdf } from "./pdf";
-import "./createDoc.css";
-
-import Button from "@material-ui/core/Button";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import VisibilityIcon from "@material-ui/icons/Visibility";
 import createDocClasses from "./styles";
-import DeleteIcon from "@material-ui/icons/Delete";
+import "./createDoc.css";
 
 const CreateDoc: React.FC = () => {
   const [docInitialized, setDocInitialization] = useState<Boolean>(false);

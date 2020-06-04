@@ -5,6 +5,9 @@ import Select from '@material-ui/core/Select';
 import classNames from 'classnames';
 import dropdownStyles from './styles';
 import { CreateDocActions } from '../../actions/createDocActions';
+import { useSelector } from '../../reducers/rootReducer';
+
+type reduxDropdownState = "documentType";
 
 interface OptionItem {
   id: string,
@@ -12,12 +15,13 @@ interface OptionItem {
 }
 
 interface DropdownProps {
-  action: (docType: string) => CreateDocActions,
-  name: string,
+  action: (docTypeId: string) => CreateDocActions,
+  name: reduxDropdownState,
   options: OptionItem[],
   title: string,
   className?: string,
 }
+
 
 const createOptions = (opt: OptionItem) => (
   <option key={opt.id} value={opt.id}>{opt.value}</option>
@@ -28,20 +32,12 @@ const renderOptions = (options: OptionItem[]) => options.map(createOptions);
 const Dropdown: React.FC<DropdownProps> = (props) => {
 
   const { action, className, name, options, title } = props;
-  const [dropdownValue, setDropdownValue] = React.useState<string | number>();
+  const documentType = useSelector(state => state.createDoc[name]);
   const classes = dropdownStyles();
   const rootClass = classNames(classes.root, className);
 
-  const getDocumentType = (id: string) => {
-    const type = options.filter(opt => opt.id === id);
-    if (!type || !type.length) return '';
-    return type[0].value;
-  }
-
   const handleChange = (event: React.ChangeEvent<{ value: any }>) => {
-    const value = event.target.value;
-    setDropdownValue(value);
-    action(getDocumentType(value));
+    action(event.target.value);
   };
 
   return (
@@ -53,7 +49,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
           labelId={`select-${name}-label`}
           native
           onChange={handleChange}
-          value={dropdownValue}
+          value={documentType}
         >
           <option aria-label="None" value="" />
           {renderOptions(options)}

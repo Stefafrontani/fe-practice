@@ -7,7 +7,7 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import Dropdown from "../../components/Dropdown";
 import documentTypes from "./config";
 import { createPdf } from "./pdf";
-import { setDocType } from "../../actions/createDocActions";
+import { setDocType as setDocTypeAction } from "../../actions/createDocActions";
 import { RootState } from "../../reducers/rootReducer";
 import createDocClasses from "./styles";
 import "./createDoc.css";
@@ -123,7 +123,7 @@ const CreateDoc: React.FC<Props> = (props) => {
 };
 
 const mapDispatch = {
-    setDocType: (docType: string) => setDocType(docType)
+    setDocType: (docType: string) => setDocTypeAction(docType)
 }
 
 const mapState = (state: RootState) => ({
@@ -132,7 +132,6 @@ const mapState = (state: RootState) => ({
 
 const connector = connect(mapState, mapDispatch);
 
-type PropsFromRedux = ConnectedProps<typeof connector>
-type Props = PropsFromRedux;
+type Props = ConnectedProps<typeof connector>;
 
 export default connector(CreateDoc);

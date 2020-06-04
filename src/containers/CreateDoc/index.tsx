@@ -90,7 +90,7 @@ const CreateDoc: React.FC = () => {
               onClick={openPdf}
               variant="contained"
               color="default"
-              className={docClasses.button}
+              className={docClasses.openPdfButton}
               startIcon={<VisibilityIcon />}
             >
               Ver archivo

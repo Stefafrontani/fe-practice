@@ -1,0 +1,19 @@
+.nav {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  box-shadow: 0px -5px 14px 4px rgba(0, 0, 0, 0.2);
+}
+
+.nav__list {
+  display: flex;
+  margin-left: auto;
+}
+
+.nav__logo {
+  margin-left: 20px;
+}
+
+.nav__item {
+  padding: 30px 40px;
+}

@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import Dropdown from "../../components/Dropdown";
+import DocumentDescription from "../../components/DocumentDescription";
 import documentTypes from "./config";
 import { createPdf } from "./pdf";
 import { setDocType as setDocTypeAction } from "../../actions/createDocActions";
@@ -44,22 +45,7 @@ const CreateDoc: React.FC<Props> = (props) => {
       </ul>
       {/* TODO All of that text info should come from a config or endpoint data */}
       <div className="content__information">
-        <h4 className="content__information-title">¿Qué es una tutela?</h4>
-        <p className="content__information-explanation">
-          Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit, sed do eiusmod tempor incididunt ut labore et
-          dolore magna aliqua. Excepteur sint occaecat
-          cupidatat non proident, sunt in culpa qui officia
-          deserunt mollit anim id est laborum. Consectetur
-          adipiscing elit, sed do eiusmod tempor incididunt ut
-          labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris
-          nisi ut aliquip ex ea commodo consequat. Duis aute
-          irure dolor in reprehenderit in voluptate velit esse
-          cillum dolore eu fugiat nulla pariatur. Excepteur
-          sint occaecat cupidatat non proident, sunt in culpa
-          qui officia deserunt mollit anim id est laborum.
-        </p>
+        <DocumentDescription />
       </div>
       <div className="content__instructions">
         <h4 className="content__instructions-title">¿Qué debo hacer?</h4>

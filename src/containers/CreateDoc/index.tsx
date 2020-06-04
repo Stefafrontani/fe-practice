@@ -40,6 +40,7 @@ const CreateDoc: React.FC = () => {
         <li>Demanda</li>
         <li>Sugerencia documento</li>
       </ul>
+      {/* TODO All of that text info should come from a config or endpoint data */}
       <div className="content__information">
         <h4 className="content__information-title">¿Qué es una tutela?</h4>
         <p className="content__information-explanation">

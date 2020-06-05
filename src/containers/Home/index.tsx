@@ -56,8 +56,6 @@ const Home: React.FC = () => {
         {/* Send button*/}
         <input type="submit" value="Send" disabled={disableForm} />
       </form>
-
-      <pre>{JSON.stringify(fields, null, 2)}</pre>
     </React.Fragment>
   );
 };

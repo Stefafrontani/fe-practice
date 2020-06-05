@@ -23,7 +23,7 @@ interface Dictionary<T> {
 
 // Hook START
 const useForm = (settings: FormInput[]) => {
-  const createObjectFrom = (
+  const convertArrayToObject = (
     arraySource: FormInput[],
     keyFunction: ParameterFunction<string>,
     valueFunction: ParameterFunction<any>
@@ -47,8 +47,8 @@ const useForm = (settings: FormInput[]) => {
     return errorArray;
   };
 
-  const errorFunctionsByKey: Dictionary<[]> = useMemo(() => {
-    return createObjectFrom(
+  const validatorsByKey: Dictionary<[]> = useMemo(() => {
+    return convertArrayToObject(
       settings,
       (item) => item.field,
       (item) => item.validators || []
@@ -56,17 +56,17 @@ const useForm = (settings: FormInput[]) => {
   }, []);
 
   const [fields, setFields] = useState<Dictionary<string>>(
-    createObjectFrom(
+    convertArrayToObject(
       settings,
       (item) => item.field,
       (item) => item.value || ''
     )
   );
   const [errors, setErrors] = useState<Dictionary<[]>>(
-    createObjectFrom(
+    convertArrayToObject(
       settings,
       (item) => item.field,
-      (item) => calculateErrorList(item.value, errorFunctionsByKey[item.field])
+      (item) => calculateErrorList(item.value, validatorsByKey[item.field])
     )
   );
 
@@ -77,10 +77,10 @@ const useForm = (settings: FormInput[]) => {
   const onChange = (event: React.ChangeEvent<{ name: any; value: any }>) => {
     const { name, value } = event.target;
 
-    if (errorFunctionsByKey[name].length) {
+    if (validatorsByKey[name].length) {
       const newErrorList: string[] = calculateErrorList(
         value,
-        errorFunctionsByKey[name]
+        validatorsByKey[name]
       );
       const oldErrorList: string[] = errors[name];
 

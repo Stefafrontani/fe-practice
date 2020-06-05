@@ -30,7 +30,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
   const classes = dropdownStyles();
   const rootClass = classNames(classes.root, className);
 
-  const handleChange = (event: React.ChangeEvent<{ value: any }>) => { 
+  const handleChange = (event: React.ChangeEvent<{ value: any }>) => {
     setDropdownValue(event.target.value);
   };
 

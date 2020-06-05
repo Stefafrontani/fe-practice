@@ -1,0 +1,53 @@
+.content {
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+  display: grid;
+  grid-template: auto auto 1fr/ 30% 70%;
+  grid-gap: 15px;
+}
+
+/* LIST - Page content head */
+.content ul {
+  grid-column: 1 / 3;
+  display: flex;
+  justify-content: space-around;
+}
+.content ul li {
+  padding: 20px 30px;
+}
+
+/* INFORMATION - Left aside */
+.content__information {
+  grid-row: 2 / 4;
+}
+
+.content__information-title {
+  text-align: center;
+}
+.content__information-explanation {
+  text-align: left;
+}
+
+/* INSTRUCTIONS - Right-Above section */
+.content__instructions {
+  text-align: center;
+}
+
+/* SHARED STYLES */
+.content__information-title,
+.content__instructions-title {
+  padding: 10px 0px;
+  font-weight: 500;
+}
+
+.content ul,
+.content__information-title,
+.content__instructions-title {
+  font-size: 22px;
+}
+
+.content__information-explanation,
+.content__instructions-explanation {
+  font-size: 18px;
+}

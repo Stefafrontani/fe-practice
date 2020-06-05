@@ -1,14 +1,13 @@
 import React, { useState } from "react";
+import Button from "@material-ui/core/Button";
+import DeleteIcon from "@material-ui/icons/Delete";
+import GetAppIcon from "@material-ui/icons/GetApp";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 import Dropdown from "../../components/Dropdown";
 import documentTypes from "./config";
 import { createPdf } from "./pdf";
-import "./createDoc.css";
-
-import Button from "@material-ui/core/Button";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import VisibilityIcon from "@material-ui/icons/Visibility";
 import createDocClasses from "./styles";
-import DeleteIcon from "@material-ui/icons/Delete";
+import "./createDoc.css";
 
 const CreateDoc: React.FC = () => {
   const [docInitialized, setDocInitialization] = useState<Boolean>(false);
@@ -40,6 +39,7 @@ const CreateDoc: React.FC = () => {
         <li>Demanda</li>
         <li>Sugerencia documento</li>
       </ul>
+      {/* TODO All of that text info should come from a config or endpoint data */}
       <div className="content__information">
         <h4 className="content__information-title">¿Qué es una tutela?</h4>
         <p className="content__information-explanation">

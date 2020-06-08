@@ -74,29 +74,32 @@ const useForm = (settings: FormInput[]) => {
     return !![].concat(...Object.values(errors)).length;
   }, [errors]);
 
+  const shouldUpdateErrors = (
+    newErrors: string[],
+    oldErrors: string[]
+  ): boolean => {
+    let shouldUpdate = newErrors.length !== oldErrors.length;
+
+    if (!shouldUpdate) {
+      for (let i = 0; i < newErrors.length; i++) {
+        if (newErrors[i] !== oldErrors[i]) {
+          shouldUpdate = true;
+          break;
+        }
+      }
+    }
+
+    return shouldUpdate;
+  };
+
   const onChange = (event: React.ChangeEvent<{ name: any; value: any }>) => {
     const { name, value } = event.target;
 
     if (validatorsByKey[name].length) {
-      const newErrorList: string[] = calculateErrorList(
-        value,
-        validatorsByKey[name]
-      );
-      const oldErrorList: string[] = errors[name];
+      const newErrorList = calculateErrorList(value, validatorsByKey[name]);
+      const oldErrorList = errors[name];
 
-      let shouldUpdateErrors: boolean =
-        newErrorList.length !== oldErrorList.length;
-
-      if (!shouldUpdateErrors) {
-        for (let i = 0; i < newErrorList.length; i++) {
-          if (newErrorList[i] !== oldErrorList[i]) {
-            shouldUpdateErrors = true;
-            break;
-          }
-        }
-      }
-
-      if (shouldUpdateErrors) {
+      if (shouldUpdateErrors(newErrorList, oldErrorList)) {
         setErrors((previousErrors) => ({
           ...previousErrors,
           [name]: newErrorList,

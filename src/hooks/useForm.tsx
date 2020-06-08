@@ -22,34 +22,34 @@ interface Dictionary<T> {
 // Interfaces END
 
 // Hook START
-const useForm = (settings: FormInput[]) => {
+const useForm = (fieldsSettings: FormInput[]) => {
   const convertArrayToObject = (
-    arraySource: FormInput[],
-    keyFunction: ParameterFunction<string>,
-    valueFunction: ParameterFunction<any>
+    dataSource: FormInput[],
+    createKey: ParameterFunction<string>,
+    createValue: ParameterFunction<any>
   ) =>
-    arraySource.reduce((object: Dictionary<any>, item: FormInput) => {
-      object[keyFunction(item)] = valueFunction(item);
+    dataSource.reduce((object: Dictionary<any>, item: FormInput) => {
+      object[createKey(item)] = createValue(item);
       return object;
     }, {});
 
-  const calculateErrorList = (
+  const calculateErrorsForValue = (
     value: string,
-    errorFunctions: Validator[]
+    validators: Validator[]
   ): string[] => {
-    let errorArray: string[] = [];
-    for (let errorFunction of errorFunctions) {
-      let errorMessage: string = errorFunction(value);
+    let errors: string[] = [];
+    for (let validator of validators) {
+      let errorMessage: string = validator(value);
       if (errorMessage) {
-        errorArray.push(errorMessage);
+        errors.push(errorMessage);
       }
     }
-    return errorArray;
+    return errors;
   };
 
   const validatorsByKey: Dictionary<[]> = useMemo(() => {
     return convertArrayToObject(
-      settings,
+      fieldsSettings,
       (item) => item.field,
       (item) => item.validators || []
     );
@@ -57,24 +57,24 @@ const useForm = (settings: FormInput[]) => {
 
   const [fields, setFields] = useState<Dictionary<string>>(
     convertArrayToObject(
-      settings,
+      fieldsSettings,
       (item) => item.field,
       (item) => item.value || ''
     )
   );
-  const [errors, setErrors] = useState<Dictionary<[]>>(
+  const [formErrors, setFormErrors] = useState<Dictionary<[]>>(
     convertArrayToObject(
-      settings,
+      fieldsSettings,
       (item) => item.field,
-      (item) => calculateErrorList(item.value, validatorsByKey[item.field])
+      (item) => calculateErrorsForValue(item.value, validatorsByKey[item.field])
     )
   );
 
-  const disableForm: boolean = useMemo(() => {
-    return !![].concat(...Object.values(errors)).length;
-  }, [errors]);
+  const disableForm = useMemo<boolean>(() => {
+    return !![].concat(...Object.values(formErrors)).length;
+  }, [formErrors]);
 
-  const shouldUpdateErrors = (
+  const shouldUpdateFormErrors = (
     newErrors: string[],
     oldErrors: string[]
   ): boolean => {
@@ -96,13 +96,13 @@ const useForm = (settings: FormInput[]) => {
     const { name, value } = event.target;
 
     if (validatorsByKey[name].length) {
-      const newErrorList = calculateErrorList(value, validatorsByKey[name]);
-      const oldErrorList = errors[name];
+      const newErrors = calculateErrorsForValue(value, validatorsByKey[name]);
+      const oldErrors = formErrors[name];
 
-      if (shouldUpdateErrors(newErrorList, oldErrorList)) {
-        setErrors((previousErrors) => ({
+      if (shouldUpdateFormErrors(newErrors, oldErrors)) {
+        setFormErrors((previousErrors) => ({
           ...previousErrors,
-          [name]: newErrorList,
+          [name]: newErrors,
         }));
       }
     }
@@ -110,7 +110,7 @@ const useForm = (settings: FormInput[]) => {
     setFields((previousFields) => ({ ...previousFields, [name]: value }));
   };
 
-  return { fields, onChange, errors, disableForm };
+  return { fields, onChange, errors: formErrors, disableForm };
 };
 // Hook END
 

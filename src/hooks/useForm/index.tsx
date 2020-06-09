@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 
 // Interfaces START
 
-interface Validator {
+export interface Validator {
   (value: string): string;
 }
 
@@ -47,13 +47,13 @@ const useForm = (fieldsSettings: FormInput[]) => {
     return errors;
   };
 
-  const validatorsByKey: Dictionary<[]> = useMemo(() => {
-    return convertArrayToObject(
+  const [validatorsByKey] = useState<Dictionary<[]>>(
+    convertArrayToObject(
       fieldsSettings,
       (item) => item.field,
       (item) => item.validators || []
-    );
-  }, []);
+    )
+  );
 
   const [fields, setFields] = useState<Dictionary<string>>(
     convertArrayToObject(
@@ -114,14 +114,4 @@ const useForm = (fieldsSettings: FormInput[]) => {
 };
 // Hook END
 
-// Validator functions START
-export const isRequired: Validator = (value: string) =>
-  !value ? 'is required' : '';
-
-export const isEmail: Validator = (value) =>
-  !/.+@.+\.[A-Za-z]+$/.test(value) ? 'has wrong format' : '';
-
-export const maxChars = (maxChars: number): Validator => (value: string) =>
-  value.length >= maxChars ? `size is greater than ${maxChars} characters` : '';
-// Validator functions END
-export default useForm;
+export { useForm };

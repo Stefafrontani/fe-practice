@@ -7,12 +7,14 @@ export interface Validator {
 }
 
 interface FormInput {
-  field: string;
   value: string;
   validators: Validator[];
 }
-interface ParameterFunction<T> {
-  (value: FormInput): T;
+interface ParameterKeyFunction<T> {
+  (key: string): T;
+}
+interface ParameterValueFunction<T> {
+  (value: FormInput, key: string): T;
 }
 
 interface Dictionary<T> {
@@ -22,16 +24,20 @@ interface Dictionary<T> {
 // Interfaces END
 
 // Hook START
-const useForm = (fieldsSettings: FormInput[]) => {
+const useForm = (fieldsSettings: Dictionary<FormInput>) => {
   const convertArrayToObject = (
-    dataSource: FormInput[],
-    createKey: ParameterFunction<string>,
-    createValue: ParameterFunction<any>
+    dataSource: Dictionary<FormInput>,
+    createKey: ParameterKeyFunction<string>,
+    createValue: ParameterValueFunction<any>
   ) =>
-    dataSource.reduce((object: Dictionary<any>, item: FormInput) => {
-      object[createKey(item)] = createValue(item);
-      return object;
-    }, {});
+    Object.entries(dataSource).reduce(
+      (object: Dictionary<any>, item: [string, FormInput]) => {
+        let [key, value] = item;
+        object[createKey(key)] = createValue(value, key);
+        return object;
+      },
+      {}
+    );
 
   const calculateErrorsForValue = (
     value: string,
@@ -47,26 +53,23 @@ const useForm = (fieldsSettings: FormInput[]) => {
     return errors;
   };
 
-  const [validatorsByKey] = useState<Dictionary<[]>>(
-    convertArrayToObject(
-      fieldsSettings,
-      (item) => item.field,
-      (item) => item.validators || []
-    )
-  );
+  const getValidatorsByKey = (key: string) => {
+    return fieldsSettings[key].validators || [];
+  };
 
   const [values, setValues] = useState<Dictionary<string>>(
     convertArrayToObject(
       fieldsSettings,
-      (item) => item.field,
-      (item) => item.value || ''
+      (key) => key,
+      (value) => value.value || ''
     )
   );
   const [formErrors, setFormErrors] = useState<Dictionary<[]>>(
     convertArrayToObject(
       fieldsSettings,
-      (item) => item.field,
-      (item) => calculateErrorsForValue(item.value, validatorsByKey[item.field])
+      (key) => key,
+      (value, key) =>
+        calculateErrorsForValue(value.value, getValidatorsByKey(key))
     )
   );
 
@@ -95,8 +98,11 @@ const useForm = (fieldsSettings: FormInput[]) => {
   const onChange = (event: React.ChangeEvent<{ name: any; value: any }>) => {
     const { name, value } = event.target;
 
-    if (validatorsByKey[name].length) {
-      const newErrors = calculateErrorsForValue(value, validatorsByKey[name]);
+    if (getValidatorsByKey(name).length) {
+      const newErrors = calculateErrorsForValue(
+        value,
+        getValidatorsByKey(name)
+      );
       const oldErrors = formErrors[name];
 
       if (shouldUpdateFormErrors(newErrors, oldErrors)) {

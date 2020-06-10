@@ -3,11 +3,22 @@ import { useForm } from '../../hooks/useForm';
 import { isRequired, isEmail, maxChars } from '../../hooks/useForm/validators';
 
 const Contact: React.FC = () => {
-  const { values, onChange, errors, disableSubmit } = useForm([
-    { field: 'name', value: '', validators: [isRequired] },
-    { field: 'email', value: '', validators: [isRequired, isEmail] },
-    { field: 'comment', value: '', validators: [maxChars(20)] },
-  ]);
+  const formInputs = {
+    name: {
+      value: '',
+      validators: [isRequired],
+    },
+    email: {
+      value: '',
+      validators: [isRequired, isEmail],
+    },
+    comment: {
+      value: '',
+      validators: [maxChars(20)],
+    },
+  };
+
+  const { values, onChange, errors, disableSubmit } = useForm(formInputs);
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

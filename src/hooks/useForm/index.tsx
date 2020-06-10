@@ -10,9 +10,7 @@ interface FormInput {
   value: string;
   validators: Validator[];
 }
-interface ParameterKeyFunction<T> {
-  (key: string): T;
-}
+
 interface ParameterValueFunction<T> {
   (value: FormInput, key: string): T;
 }
@@ -27,13 +25,12 @@ interface Dictionary<T> {
 const useForm = (fieldsSettings: Dictionary<FormInput>) => {
   const convertArrayToObject = (
     dataSource: Dictionary<FormInput>,
-    createKey: ParameterKeyFunction<string>,
     createValue: ParameterValueFunction<any>
   ) =>
     Object.entries(dataSource).reduce(
       (object: Dictionary<any>, item: [string, FormInput]) => {
         let [key, value] = item;
-        object[createKey(key)] = createValue(value, key);
+        object[key] = createValue(value, key);
         return object;
       },
       {}
@@ -58,18 +55,11 @@ const useForm = (fieldsSettings: Dictionary<FormInput>) => {
   };
 
   const [values, setValues] = useState<Dictionary<string>>(
-    convertArrayToObject(
-      fieldsSettings,
-      (key) => key,
-      (value) => value.value || ''
-    )
+    convertArrayToObject(fieldsSettings, (value) => value.value || '')
   );
   const [formErrors, setFormErrors] = useState<Dictionary<[]>>(
-    convertArrayToObject(
-      fieldsSettings,
-      (key) => key,
-      (value, key) =>
-        calculateErrorsForValue(value.value, getValidatorsByKey(key))
+    convertArrayToObject(fieldsSettings, (value, key) =>
+      calculateErrorsForValue(value.value, getValidatorsByKey(key))
     )
   );
 

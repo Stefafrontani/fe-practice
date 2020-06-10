@@ -55,7 +55,7 @@ const useForm = (fieldsSettings: FormInput[]) => {
     )
   );
 
-  const [fields, setFields] = useState<Dictionary<string>>(
+  const [values, setValues] = useState<Dictionary<string>>(
     convertArrayToObject(
       fieldsSettings,
       (item) => item.field,
@@ -70,7 +70,7 @@ const useForm = (fieldsSettings: FormInput[]) => {
     )
   );
 
-  const disableForm = useMemo<boolean>(() => {
+  const disableSubmit = useMemo<boolean>(() => {
     return !![].concat(...Object.values(formErrors)).length;
   }, [formErrors]);
 
@@ -107,10 +107,10 @@ const useForm = (fieldsSettings: FormInput[]) => {
       }
     }
 
-    setFields((previousFields) => ({ ...previousFields, [name]: value }));
+    setValues((previousFields) => ({ ...previousFields, [name]: value }));
   };
 
-  return { fields, onChange, errors: formErrors, disableForm };
+  return { values, onChange, errors: formErrors, disableSubmit };
 };
 // Hook END
 

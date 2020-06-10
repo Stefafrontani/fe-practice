@@ -3,7 +3,7 @@ import { useForm } from '../../hooks/useForm';
 import { isRequired, isEmail, maxChars } from '../../hooks/useForm/validators';
 
 const Contact: React.FC = () => {
-  const { fields, onChange, errors, disableForm } = useForm([
+  const { values, onChange, errors, disableSubmit } = useForm([
     { field: 'name', value: '', validators: [isRequired] },
     { field: 'email', value: '', validators: [isRequired, isEmail] },
     { field: 'comment', value: '', validators: [maxChars(20)] },
@@ -24,7 +24,7 @@ const Contact: React.FC = () => {
           type="text"
           name="name"
           onChange={onChange}
-          value={fields.name}
+          value={values.name}
         />
         <ul>
           {errors.name.map((error) => (
@@ -39,7 +39,7 @@ const Contact: React.FC = () => {
           type="email"
           name="email"
           onChange={onChange}
-          value={fields.email}
+          value={values.email}
         />
         <ul>
           {errors.email.map((error) => (
@@ -50,7 +50,7 @@ const Contact: React.FC = () => {
         {/* Comment field*/}
         <label>Comment: </label>
         <br />
-        <textarea name="comment" onChange={onChange} value={fields.comment} />
+        <textarea name="comment" onChange={onChange} value={values.comment} />
         <ul>
           {errors.comment.map((error) => (
             <li key={error}>Comment {error}</li>
@@ -58,7 +58,7 @@ const Contact: React.FC = () => {
         </ul>
         <br />
         {/* Send button*/}
-        <input type="submit" value="Send" disabled={disableForm} />
+        <input type="submit" value="Send" disabled={disableSubmit} />
       </form>
     </React.Fragment>
   );

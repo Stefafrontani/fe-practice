@@ -107,7 +107,7 @@ const useForm = (fieldsSettings: FormInput[]) => {
       }
     }
 
-    setValues((previousFields) => ({ ...previousFields, [name]: value }));
+    setValues((previousValues) => ({ ...previousValues, [name]: value }));
   };
 
   return { values, onChange, errors: formErrors, disableSubmit };

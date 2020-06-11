@@ -1,5 +1,5 @@
 import * as constants from '../constants/actionTypes';
-import { CreateDocActions } from '../actions/createDocActions';
+import { CreateDocActionsTypes } from '../actions/createDoc';
 
 interface CreateDocState {
     documentType: string | null;
@@ -11,7 +11,7 @@ const initialState: CreateDocState = {
 
 export default function createDocReducer(
     state = initialState, 
-    action: CreateDocActions
+    action: CreateDocActionsTypes
 ): CreateDocState {
     switch (action.type) {
         case constants.SET_DOC_TYPE:

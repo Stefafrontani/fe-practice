@@ -4,11 +4,11 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
 import GetAppIcon from "@material-ui/icons/GetApp";
-import Dropdown from "../../components/Dropdown";
-import DocumentDescription from "../../components/DocumentDescription";
+import Dropdown from "../../components/DocTypeDropdown";
+import DocumentContent from "../../components/DocumentContent";
 import documentTypes from "./config";
 import { createPdf } from "./pdf";
-import { setDocType as setDocTypeAction } from "../../actions/createDocActions";
+import { setDocType as setDocTypeAction } from "../../actions/createDoc";
 import { RootState } from "../../reducers/rootReducer";
 import createDocClasses from "./styles";
 import "./createDoc.css";
@@ -45,7 +45,7 @@ const CreateDoc: React.FC<Props> = (props) => {
       </ul>
       {/* TODO All of that text info should come from a config or endpoint data */}
       <div className="content__information">
-        <DocumentDescription />
+        <DocumentContent />
       </div>
       <div className="content__instructions">
         <h4 className="content__instructions-title">¿Qué debo hacer?</h4>
@@ -71,9 +71,9 @@ const CreateDoc: React.FC<Props> = (props) => {
               Cancelar Documento
               </Button>
             <Dropdown 
-                action={props.setDocType} 
                 name="documentType" 
                 options={documentTypes} 
+                setDocType={props.setDocType} 
                 title="Document type" 
             />
             <Button

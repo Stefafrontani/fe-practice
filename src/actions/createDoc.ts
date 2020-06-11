@@ -12,4 +12,4 @@ export const setDocType = (docType: string): SetDocType => ({
    payload: docType
 });
 
-export type CreateDocActions = SetDocType;
+export type CreateDocActionsTypes = SetDocType;

@@ -12,7 +12,7 @@ interface FormInput {
 }
 
 interface ParameterValueFunction<T> {
-  (value: FormInput, key: string): T;
+  (formInputValue: FormInput, key: string): T;
 }
 
 interface Dictionary<T> {
@@ -55,11 +55,14 @@ const useForm = (fieldsSettings: Dictionary<FormInput>) => {
   };
 
   const [values, setValues] = useState<Dictionary<string>>(
-    convertArrayToObject(fieldsSettings, (value) => value.value || '')
+    convertArrayToObject(
+      fieldsSettings,
+      (formInputValue) => formInputValue.value || ''
+    )
   );
   const [formErrors, setFormErrors] = useState<Dictionary<[]>>(
-    convertArrayToObject(fieldsSettings, (value, key) =>
-      calculateErrorsForValue(value.value, getValidatorsByKey(key))
+    convertArrayToObject(fieldsSettings, (formInputValue, key) =>
+      calculateErrorsForValue(formInputValue.value, getValidatorsByKey(key))
     )
   );
 

@@ -26,15 +26,13 @@ const useForm = (fieldsSettings: Dictionary<FormInput>) => {
   const convertArrayToObject = (
     dataSource: Dictionary<FormInput>,
     createValue: ParameterValueFunction<any>
-  ) =>
-    Object.entries(dataSource).reduce(
-      (object: Dictionary<any>, item: [string, FormInput]) => {
-        let [key, value] = item;
-        object[key] = createValue(value, key);
-        return object;
-      },
-      {}
-    );
+  ) => {
+    let object: Dictionary<any> = {};
+    for (let [key, value] of Object.entries(dataSource)) {
+      object[key] = createValue(value, key);
+    }
+    return object;
+  };
 
   const calculateErrorsForValue = (
     value: string,
@@ -57,6 +55,7 @@ const useForm = (fieldsSettings: Dictionary<FormInput>) => {
   const [values, setValues] = useState<Dictionary<string>>(
     convertArrayToObject(fieldsSettings, (formInput) => formInput.value || '')
   );
+
   const [formErrors, setFormErrors] = useState<Dictionary<[]>>(
     convertArrayToObject(fieldsSettings, (formInput, key) =>
       calculateErrorsForValue(formInput.value, getValidatorsByKey(key))

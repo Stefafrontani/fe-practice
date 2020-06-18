@@ -37,11 +37,13 @@ const Contact: React.FC = () => {
           onChange={onChange}
           value={values.name}
         />
-        <ul>
-          {errors.name.map((error) => (
-            <li key={error}>Name {error}</li>
-          ))}
-        </ul>
+        {errors.name.length > 0 && (
+          <ul>
+            {errors.name.map((error) => (
+              <li key={error}>Name {error}</li>
+            ))}
+          </ul>
+        )}
         <br />
         {/* Email field*/}
         <label>Email: </label>
@@ -52,21 +54,25 @@ const Contact: React.FC = () => {
           onChange={onChange}
           value={values.email}
         />
-        <ul>
-          {errors.email.map((error) => (
-            <li key={error}>Email {error}</li>
-          ))}
-        </ul>
+        {errors.email.length > 0 && (
+          <ul>
+            {errors.email.map((error) => (
+              <li key={error}>Email {error}</li>
+            ))}
+          </ul>
+        )}
         <br />
         {/* Comment field*/}
         <label>Comment: </label>
         <br />
         <textarea name="comment" onChange={onChange} value={values.comment} />
-        <ul>
-          {errors.comment.map((error) => (
-            <li key={error}>Comment {error}</li>
-          ))}
-        </ul>
+        {errors.comment.length > 0 && (
+          <ul>
+            {errors.comment.map((error) => (
+              <li key={error}>Comment {error}</li>
+            ))}
+          </ul>
+        )}
         <br />
         {/* Send button*/}
         <input type="submit" value="Send" disabled={disableSubmit} />

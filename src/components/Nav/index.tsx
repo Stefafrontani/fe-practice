@@ -23,10 +23,13 @@ const Nav: React.FC = () => {
           <li className="nav__item">
             <Link to="/about">About</Link>
           </li>
+          <li className="nav__item">
+            <Link to="/contact">Contact</Link>
+          </li>
         </ul>
       </nav>
     </header>
   );
-}
+};
 
 export default Nav;

@@ -4263,9 +4263,6 @@ escodegen@^1.11.0, escodegen@^1.11.1, escodegen@^1.9.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 escodegen@^1.11.1:
   version "1.14.2"
   resolved "https://registry.yarnpkg.com/escodegen/-/escodegen-1.14.2.tgz#14ab71bf5026c2aa08173afba22c6f3173284a84"
@@ -4278,9 +4275,6 @@ escodegen@^1.11.1:
   optionalDependencies:
     source-map "~0.6.1"
 
->>>>>>> Added new Lock and firebase cache
-=======
->>>>>>> Initial redux config & createDoc reducer - action
 escodegen@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/escodegen/-/escodegen-1.2.0.tgz#09de7967791cc958b7f89a2ddb6d23451af327e1"

@@ -15,7 +15,7 @@ interface OptionItem {
 }
 
 interface DropdownProps {
-  setDocType: (docTypeId: string) => CreateDocActionsTypes,
+  handleChange: (event: React.ChangeEvent<{ value: any }>) => void,
   name: reduxDropdownState,
   options: OptionItem[],
   title: string,
@@ -30,14 +30,10 @@ const renderOptions = (options: OptionItem[]) => options.map(createOptions);
 
 const DocTypeDropdown: React.FC<DropdownProps> = (props) => {
 
-  const { setDocType, className, name, options, title } = props;
+  const { className, handleChange, name, options, title } = props;
   const documentType = useSelector(state => state.createDoc[name]);
   const classes = dropdownStyles();
   const rootClass = classNames(classes.root, className);
-
-  const handleChange = (event: React.ChangeEvent<{ value: any }>) => {
-    setDocType(event.target.value);
-  };
 
   return (
     <div className={rootClass}>

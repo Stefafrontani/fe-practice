@@ -35,6 +35,10 @@ const CreateDoc: React.FC<Props> = (props) => {
     setDocInitialization(parsedDocInitialized);
   }
 
+  const handleDropdownChange = (event: React.ChangeEvent<{ value: any }>) => {
+    props.setDocType(event.target.value);
+  };
+
   return (
     <div className="content">
       <ul>
@@ -73,7 +77,7 @@ const CreateDoc: React.FC<Props> = (props) => {
             <Dropdown 
                 name="documentType" 
                 options={documentTypes} 
-                setDocType={props.setDocType} 
+                handleChange={handleDropdownChange} 
                 title="Document type" 
             />
             <Button

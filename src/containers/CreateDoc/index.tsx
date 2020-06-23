@@ -1,15 +1,19 @@
 import React, { useState } from "react";
+import { connect, ConnectedProps } from 'react-redux';
+import VisibilityIcon from "@material-ui/icons/Visibility";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
 import GetAppIcon from "@material-ui/icons/GetApp";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import Dropdown from "../../components/Dropdown";
+import Dropdown from "../../components/DocTypeDropdown";
+import DocumentContent from "../../components/DocumentContent";
 import documentTypes from "./config";
 import { createPdf } from "./pdf";
+import { setDocType as setDocTypeAction } from "../../actions/createDoc";
+import { RootState } from "../../reducers/rootReducer";
 import createDocClasses from "./styles";
 import "./createDoc.css";
 
-const CreateDoc: React.FC = () => {
+const CreateDoc: React.FC<Props> = (props) => {
   const [docInitialized, setDocInitialization] = useState<Boolean>(false);
 
   const docClasses = createDocClasses();
@@ -31,6 +35,10 @@ const CreateDoc: React.FC = () => {
     setDocInitialization(parsedDocInitialized);
   }
 
+  const handleDropdownChange = (event: React.ChangeEvent<{ value: any }>) => {
+    props.setDocType(event.target.value);
+  };
+
   return (
     <div className="content">
       <ul>
@@ -41,22 +49,7 @@ const CreateDoc: React.FC = () => {
       </ul>
       {/* TODO All of that text info should come from a config or endpoint data */}
       <div className="content__information">
-        <h4 className="content__information-title">¿Qué es una tutela?</h4>
-        <p className="content__information-explanation">
-          Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit, sed do eiusmod tempor incididunt ut labore et
-          dolore magna aliqua. Excepteur sint occaecat
-          cupidatat non proident, sunt in culpa qui officia
-          deserunt mollit anim id est laborum. Consectetur
-          adipiscing elit, sed do eiusmod tempor incididunt ut
-          labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris
-          nisi ut aliquip ex ea commodo consequat. Duis aute
-          irure dolor in reprehenderit in voluptate velit esse
-          cillum dolore eu fugiat nulla pariatur. Excepteur
-          sint occaecat cupidatat non proident, sunt in culpa
-          qui officia deserunt mollit anim id est laborum.
-        </p>
+        <DocumentContent />
       </div>
       <div className="content__instructions">
         <h4 className="content__instructions-title">¿Qué debo hacer?</h4>
@@ -81,10 +74,11 @@ const CreateDoc: React.FC = () => {
             >
               Cancelar Documento
               </Button>
-            <Dropdown
-              name="documentType"
-              title="Document type"
-              options={documentTypes}
+            <Dropdown 
+                name="documentType" 
+                options={documentTypes} 
+                handleChange={handleDropdownChange} 
+                title="Document type" 
             />
             <Button
               onClick={openPdf}
@@ -118,4 +112,16 @@ const CreateDoc: React.FC = () => {
   );
 };
 
-export default CreateDoc;
+const mapDispatch = {
+    setDocType: (docType: string) => setDocTypeAction(docType)
+}
+
+const mapState = (state: RootState) => ({
+    docType: state.createDoc.documentType
+})
+
+const connector = connect(mapState, mapDispatch);
+
+type Props = ConnectedProps<typeof connector>;
+
+export default connector(CreateDoc);

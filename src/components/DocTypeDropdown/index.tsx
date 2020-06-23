@@ -4,14 +4,19 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import classNames from 'classnames';
 import dropdownStyles from './styles';
+import { CreateDocActionsTypes } from '../../actions/createDoc';
+import { useSelector } from '../../reducers/rootReducer';
+
+type reduxDropdownState = "documentType";
 
 interface OptionItem {
-  id: number,
+  id: string,
   value: string
 }
 
 interface DropdownProps {
-  name: string,
+  handleChange: (event: React.ChangeEvent<{ value: any }>) => void,
+  name: reduxDropdownState,
   options: OptionItem[],
   title: string,
   className?: string,
@@ -23,16 +28,12 @@ const createOptions = (opt: OptionItem) => (
 
 const renderOptions = (options: OptionItem[]) => options.map(createOptions);
 
-const Dropdown: React.FC<DropdownProps> = (props) => {
+const DocTypeDropdown: React.FC<DropdownProps> = (props) => {
 
-  const { className, name, options, title } = props;
-  const [dropdownValue, setDropdownValue] = React.useState<string | number>();
+  const { className, handleChange, name, options, title } = props;
+  const documentType = useSelector(state => state.createDoc[name]);
   const classes = dropdownStyles();
   const rootClass = classNames(classes.root, className);
-
-  const handleChange = (event: React.ChangeEvent<{ value: any }>) => {
-    setDropdownValue(event.target.value);
-  };
 
   return (
     <div className={rootClass}>
@@ -43,7 +44,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
           labelId={`select-${name}-label`}
           native
           onChange={handleChange}
-          value={dropdownValue}
+          value={documentType}
         >
           <option aria-label="None" value="" />
           {renderOptions(options)}
@@ -53,4 +54,4 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
   );
 }
 
-export default Dropdown;
+export default DocTypeDropdown;

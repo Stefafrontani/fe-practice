@@ -4,7 +4,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import classNames from 'classnames';
 import dropdownStyles from './styles';
-import { CreateDocActionsTypes } from '../../actions/createDoc';
 import { useSelector } from '../../reducers/rootReducer';
 
 type reduxDropdownState = "documentType";

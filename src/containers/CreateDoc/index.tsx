@@ -18,25 +18,8 @@ import { Step } from '../../reducers/docStepsReducer';
 import { RootState } from "../../reducers/rootReducer";
 import createDocClasses from "./styles";
 import "./createDoc.css";
+import tutelaSteps from "./configTutela";
 
-const initialDocSteps = [
-  {
-    title: "Name",
-    component: <input placeholder="name" />
-  },
-  {
-    title: "Last Name",
-    component: <input placeholder="name" />
-  },
-  {
-    title: "Age",
-    component: <select>
-        <option value="value1">20</option> 
-        <option value="value2" selected>30</option>
-        <option value="value3">40</option>
-      </select>
-  },
-];
 
 const CreateDoc: React.FC<Props> = (props) => {
   const [docInitialized, setDocInitialization] = useState<Boolean>(false);
@@ -46,7 +29,7 @@ const CreateDoc: React.FC<Props> = (props) => {
 
   useEffect(() => {
     // initial config hard coded to show an example
-    setDocSteps(initialDocSteps);
+    setDocSteps(tutelaSteps);
     setCurrentStep(0);
   }, []);
 
@@ -98,7 +81,7 @@ const CreateDoc: React.FC<Props> = (props) => {
       </div>
       <div>
         {docInitialized ? (
-          <Wizard>
+          <>
             <Button
               onClick={handleDocInitialization}
               startIcon={<DeleteIcon />}
@@ -129,14 +112,16 @@ const CreateDoc: React.FC<Props> = (props) => {
             >
               Descargar pdf
             </Button>
-            {/* TODO: This should be in a new component */}
-            {(steps && currentStep !== null) && (
-              <div>
-                <p>{steps[currentStep].title}</p>
-                <p>{steps[currentStep].component}</p>
-              </div>
-            )}
-          </Wizard>
+            <Wizard>
+              {/* TODO: This should be in a new component */}
+              {(steps && currentStep !== null) && (
+                <div>
+                  <p>{steps[currentStep].title}</p>
+                  <p>{steps[currentStep].component}</p>
+                </div>
+              )}
+            </Wizard>
+          </>
         ) : (
             <Button
               color="default"

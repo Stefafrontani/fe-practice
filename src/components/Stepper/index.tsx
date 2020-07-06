@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import './stepper.css';
-import { DoublyLinkedList, Node } from './../../dataStructure/DoublyLinkedList';
 
 interface StepperProps<T> {
-  list: DoublyLinkedList<T>;
+  source: Array<T>;
   backLabel: string;
   nextLabel: string;
   endLabel: string;
-  children: (currentNode: Node<T>) => JSX.Element;
-  doBeforeClickBack?: (currentNode: Node<T>) => boolean;
-  doAfterClickBack?: (currentNode: Node<T>) => void;
-  doBeforeClickNext?: (currentNode: Node<T>) => boolean;
-  doAfterClickNext?: (currentNode: Node<T>) => void;
+  children: (current: T) => JSX.Element;
+  doBeforeClickBack?: (current: T) => boolean;
+  doAfterClickBack?: (current: T, isFirst: boolean) => void;
+  doBeforeClickNext?: (current: T) => boolean;
+  doAfterClickNext?: (current: T, isLast: boolean) => void;
+  className?: string;
 }
 
 function Stepper<T>(props: StepperProps<T>) {
   const {
-    list,
+    source,
     backLabel,
     nextLabel,
     endLabel,
@@ -25,50 +25,71 @@ function Stepper<T>(props: StepperProps<T>) {
     doAfterClickBack,
     doBeforeClickNext,
     doAfterClickNext,
+    className,
   } = props;
 
-  const [currentNode, setCurrentNode] = useState<Node<T>>();
+  const [elements, setElements] = useState<Array<T>>([]);
+  const [index, setIndex] = useState<number>(0);
 
   useEffect(() => {
-    setCurrentNode(list.head as Node<T>);
-  }, [list]);
+    setElements(props.source);
+    setIndex(0);
+  }, [source]);
+
+  const updateSetIndex = (
+    beforeClick: any,
+    afterClick: any,
+    calculateIndex: (currentIndex: number) => number,
+    isEdge: (currentIndex: number) => boolean
+  ) => {
+    if (!beforeClick || beforeClick(elements[index])) {
+      setIndex((currentIndex) => {
+        const newIndex = calculateIndex(currentIndex);
+        if (afterClick) {
+          setTimeout(() => {
+            afterClick(elements[newIndex], isEdge(currentIndex));
+          }, 0);
+        }
+        return newIndex;
+      });
+    }
+  };
 
   const handleBack = () => {
-    if (
-      (doBeforeClickBack && doBeforeClickBack(currentNode as Node<T>)) ||
-      !doBeforeClickBack
-    ) {
-      setCurrentNode((node) => (node && node.previous ? node.previous : node));
-      if (doAfterClickBack) {
-        doAfterClickBack(currentNode as Node<T>);
-      }
-    }
+    updateSetIndex(
+      doBeforeClickBack,
+      doAfterClickBack,
+      (currentIndex) => (!currentIndex ? 0 : --currentIndex),
+      (currentIndex) => !--currentIndex
+    );
   };
 
   const handleNext = () => {
-    if (
-      (doBeforeClickNext && doBeforeClickNext(currentNode as Node<T>)) ||
-      !doBeforeClickNext
-    ) {
-      setCurrentNode((node) => (node && node.next ? node.next : node));
-      if (doAfterClickNext) {
-        doAfterClickNext(currentNode as Node<T>);
-      }
-    }
+    updateSetIndex(
+      doBeforeClickNext,
+      doAfterClickNext,
+      (currentIndex) =>
+        currentIndex + 1 < elements.length ? ++currentIndex : currentIndex,
+      (currentIndex) => currentIndex + 1 === elements.length
+    );
   };
 
   return (
-    <div className='Stepper__container'>
-      <div className='Stepper__content'>
-        {currentNode && children(currentNode)}
+    <div className={`Stepper__container ${className}`}>
+      <div className="Stepper__content">
+        {elements.length > 0 && children(elements[index])}
       </div>
-      <div className='Stepper__buttons'>
-        <button type='button' onClick={handleBack}>
-          {currentNode && currentNode.previous && backLabel}
-        </button>
-        <button type='button' onClick={handleNext}>
-          {currentNode ? (currentNode.next ? nextLabel : endLabel) : null}
-        </button>
+      <div className="Stepper__buttons">
+        {!!index && (
+          <button type="button" onClick={handleBack}>
+            {backLabel}
+          </button>
+        )}
+        {index < elements.length && (
+          <button type="button" onClick={handleNext}>
+            {index + 1 === elements.length ? endLabel : nextLabel}
+          </button>
+        )}
       </div>
     </div>
   );

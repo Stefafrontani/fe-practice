@@ -1,9 +1,6 @@
 .Stepper__container {
   display: flex;
   flex-direction: column;
-  width: 600px;
-  background-color: teal;
-  color: white;
 }
 .Stepper__content {
   flex-grow: 1;

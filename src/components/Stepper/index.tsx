@@ -70,7 +70,7 @@ function Stepper<T>(props: StepperProps<T>) {
       doAfterClickNext,
       (currentIndex) =>
         currentIndex + 1 < elements.length ? ++currentIndex : currentIndex,
-      (currentIndex) => currentIndex + 1 === elements.length
+      (currentIndex) => ++currentIndex === elements.length
     );
   };
 

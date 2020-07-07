@@ -8,6 +8,7 @@ import Home from './containers/Home/';
 import About from './containers/About/';
 import Contact from './containers/Contact/';
 import CreateDoc from './containers/CreateDoc/';
+import DemoComponents from './containers/DemoComponents/';
 
 const App: React.FC = () => (
   <Router>
@@ -17,6 +18,7 @@ const App: React.FC = () => (
       <Route path="/about" component={About} />
       <Route path="/contact" component={Contact} />
       <Route path="/crear-documento" component={CreateDoc} />
+      <Route path="/demo-components" component={DemoComponents} />
     </main>
   </Router>
 );

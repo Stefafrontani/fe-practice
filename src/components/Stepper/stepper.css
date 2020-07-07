@@ -1,0 +1,15 @@
+.Stepper__container {
+  display: flex;
+  flex-direction: column;
+}
+.Stepper__content {
+  flex-grow: 1;
+}
+.Stepper__buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.Stepper__buttons > button {
+  color: inherit;
+}

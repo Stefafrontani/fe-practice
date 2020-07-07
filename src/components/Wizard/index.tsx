@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from "@material-ui/core/Button";
-import './styles.css';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from "../../reducers/rootReducer";
 import { 

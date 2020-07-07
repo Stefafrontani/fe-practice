@@ -1,5 +1,6 @@
 import React from 'react';
 
+// TODO: Remove hardcoded jsx components from here.
 export default [
     {
         title: "Name",

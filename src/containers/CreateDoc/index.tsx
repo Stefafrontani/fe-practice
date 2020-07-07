@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect, ConnectedProps } from 'react-redux';
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import Button from "@material-ui/core/Button";
@@ -6,17 +6,32 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import Dropdown from "../../components/DocTypeDropdown";
 import DocumentContent from "../../components/DocumentContent";
+import Wizard from "../../components/Wizard";
 import documentTypes from "./config";
 import { createPdf } from "./pdf";
 import { setDocType as setDocTypeAction } from "../../actions/createDoc";
+import { 
+  setCurrentStep as setCurrentStepAction,
+  setDocSteps as setDocStepsAction 
+} from "../../actions/docSteps";
+import { Step } from '../../reducers/docStepsReducer';
 import { RootState } from "../../reducers/rootReducer";
 import createDocClasses from "./styles";
 import "./createDoc.css";
+import tutelaSteps from "./configTutela";
+
 
 const CreateDoc: React.FC<Props> = (props) => {
   const [docInitialized, setDocInitialization] = useState<Boolean>(false);
-
+  const { docSteps, setCurrentStep, setDocSteps } = props;
+  const { currentStep, steps } = docSteps;
   const docClasses = createDocClasses();
+
+  useEffect(() => {
+    // initial config hard coded to show an example
+    setDocSteps(tutelaSteps);
+    setCurrentStep(0);
+  }, []);
 
   function openPdf(): void {
     createPdf().open();
@@ -66,7 +81,7 @@ const CreateDoc: React.FC<Props> = (props) => {
       </div>
       <div>
         {docInitialized ? (
-          <React.Fragment>
+          <>
             <Button
               onClick={handleDocInitialization}
               startIcon={<DeleteIcon />}
@@ -96,8 +111,17 @@ const CreateDoc: React.FC<Props> = (props) => {
               startIcon={<GetAppIcon />}
             >
               Descargar pdf
-              </Button>
-          </React.Fragment>
+            </Button>
+            <Wizard>
+              {/* TODO: This should be in a new component */}
+              {(steps && currentStep !== null) && (
+                <div>
+                  <p>{steps[currentStep].title}</p>
+                  <p>{steps[currentStep].component}</p>
+                </div>
+              )}
+            </Wizard>
+          </>
         ) : (
             <Button
               color="default"
@@ -113,11 +137,14 @@ const CreateDoc: React.FC<Props> = (props) => {
 };
 
 const mapDispatch = {
-    setDocType: (docType: string) => setDocTypeAction(docType)
+    setDocType: (docType: string) => setDocTypeAction(docType),
+    setDocSteps: (steps: Step[]) => setDocStepsAction(steps),
+    setCurrentStep: (step: number) => setCurrentStepAction(step),
 }
 
 const mapState = (state: RootState) => ({
-    docType: state.createDoc.documentType
+    docType: state.createDoc.documentType,
+    docSteps: state.docSteps
 })
 
 const connector = connect(mapState, mapDispatch);

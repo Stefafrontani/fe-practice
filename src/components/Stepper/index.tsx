@@ -32,7 +32,7 @@ function Stepper<T>(props: StepperProps<T>) {
   const [index, setIndex] = useState<number>(0);
 
   useEffect(() => {
-    setElements(props.source);
+    setElements(source);
     setIndex(0);
   }, [source]);
 

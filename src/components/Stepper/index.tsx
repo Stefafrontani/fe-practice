@@ -77,7 +77,7 @@ function Stepper<T>(props: StepperProps<T>) {
   return (
     <div className={`Stepper__container ${className}`}>
       <div className="Stepper__content">
-        {elements.length > 0 && children(elements[index])}
+        {!!elements.length && children(elements[index])}
       </div>
       <div className="Stepper__buttons">
         {!!index && (
